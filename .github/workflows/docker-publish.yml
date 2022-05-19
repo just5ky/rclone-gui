@@ -1,9 +1,6 @@
 name: ARM64 Docker CI
 
 on:
-  workflow_run:
-    branches: 
-      - main
   schedule:
     - cron: '0 0 * * 1,3,6'
   workflow_dispatch:
