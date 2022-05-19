@@ -1,4 +1,7 @@
-# rclone-gui
+# rclone-gui for arm46
+
+A fork of [febbywidyaningsih/rclone-gui-docker](https://github.com/febbywidyaningsih/rclone-gui-docker)
+
 
 Sample run command:
 
