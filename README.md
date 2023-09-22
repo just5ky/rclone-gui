@@ -9,9 +9,30 @@ Sample run command:
 docker run -d --name=rclone-gui \
 -v /config:/config \
 -v /media:/media \
--e GROUP_ID=99 -e USER_ID=100 -e TZ=America/Chicago \
+-e GROUP_ID=1000 -e USER_ID=1000 -e TZ=America/Chicago \
 -p 5572:5572 \
-d2dyno/rclone-gui:amd64
+just5ky/rclone-gui:amd64
+```
+
+```yml
+version: "3.9"
+services:
+  rclone:
+    image: jus5ky/rclone-gui:amd64 #jus5ky/rclone-gui:amd64 for ARM64
+    restart: unless-stopped
+    container_name: rclone
+    hostname: Galax
+    ports:
+      - 5572:5572
+    environment:
+      - GROUP_IP=1000
+      - USER_ID=1000
+      - TZ=America/Chicago
+      #- RCUSER=
+      #- RCPASS=
+    volumes:
+      - /config:/config
+      - /media:/media
 ```
 
 Go to `http://your-host-ip:5572` to access the Rclone GUI.
