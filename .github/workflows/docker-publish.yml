@@ -1,9 +1,10 @@
-name: ARM64 Docker CI
+name: Docker CI
 
 on:
   schedule:
     - cron: '0 0 * * 1,3,6'
   workflow_dispatch:
+  push:
 
 jobs:
   build_and_push:
@@ -45,14 +46,29 @@ jobs:
             justsky/rclone-gui
             ghcr.io/${{ github.repository }}
       
-      - name: Build and push Docker images
+      - name: Build and push Docker arm64 images
         uses: docker/build-push-action@v5
         with:
           context: .
+          file: dockerfile.arm64
           platforms: linux/arm64
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: justsky/rclone-gui:arm64
           labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/rclone-gui:buildcache_arm
+          cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/rclone-gui:buildcache_arm,mode=max
+
+      - name: Build and push Docker amd64 images
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: dockerfile.amd64
+          platforms: linux/amd64
+          push: true
+          tags: justsky/rclone-gui:amd64
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/rclone-gui:buildcache_amd
+          cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/rclone-gui:buildcache_amd,mode=max
 
       - name: Send Discord Notif
         uses: sarisia/actions-status-discord@v1
