@@ -28,8 +28,8 @@ services:
       - GROUP_IP=1000
       - USER_ID=1000
       - TZ=America/Chicago
-      #- RCUSER=
-      #- RCPASS=
+      - RCUSER=admin
+      - RCPASS=admin
     volumes:
       - /config:/config
       - /media:/media
