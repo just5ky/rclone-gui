@@ -47,7 +47,7 @@ jobs:
             ghcr.io/${{ github.repository }}
       
       - name: Build and push Docker arm64 images
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: .
           file: dockerfile.arm64
@@ -59,7 +59,7 @@ jobs:
           cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/rclone-gui:buildcache_arm,mode=max
 
       - name: Build and push Docker amd64 images
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: .
           file: dockerfile.amd64
